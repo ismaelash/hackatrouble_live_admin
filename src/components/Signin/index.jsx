@@ -11,8 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import * as Constants from '../Constants';
 
+import * as Constants from '../Constants';
 import axios from 'axios';
 
 const Copyright = () => {
@@ -60,15 +60,15 @@ const Signin = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [redirect, setRedirect] = useState(false);
   const [loadingNow, setLoadingNow] = useState(false);
 
   const onSignClicked = () => {
+    setLoadingNow(true);
     console.log(`email: ${email}`);
     console.log(`password: ${password}`);
 
-    axios.post(Constants.ENDPOINT_LOGIN, {
-      database: 'HackatroubleLive',
+    axios.post(Constants.ENDPOINT_SIGNIN, {
+      database: Constants.DATABASE_USERS,
       email: email,
       password: password
     })
@@ -78,7 +78,6 @@ const Signin = () => {
     .catch(function (error) {
       console.log(error);
     });
-    // setLoadingNow(true);
   };
 
   const loading = () => {
@@ -94,7 +93,6 @@ const Signin = () => {
 
   return (
     <Fragment>
-        {/* {redirect ? <Redirect to={Constants.ROUTE_DASHBOARD} /> : null} */}
         {
             loadingNow ? loading() :
             <Container component="main" maxWidth="xs">

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Fragment} from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -51,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const classes = useStyles();
   const [contents, setContents] = useState([]);
-
-
-
+  
   const Copyright = () => {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -68,17 +66,15 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    axios.get(Constants.ENDPOINT_POKEMON_LIST)
+    axios.get(Constants.ENDPOINT_CHALLENGE_LIST)
     .then(function (response) {
-      // handle success
       console.log(response);  
       setContents(response.data.body);
     })
     .catch(function (error) {
-      // handle error
       console.log(error);
     })
-  });
+  }, []);
 
   return (
     <Fragment>
@@ -104,7 +100,7 @@ const Dashboard = () => {
                     </CardContent>
                     <CardActions>
                       <Button onClick={() => {console.log("Click on card")}} size="small" color="primary">
-                        Edit
+                        Details
                       </Button>
                     </CardActions>
                   </Card>

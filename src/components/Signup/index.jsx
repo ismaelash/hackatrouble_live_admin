@@ -1,5 +1,4 @@
 import React, {useState, Fragment} from 'react';
-// import {Redirect} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,20 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import * as Constants from '../Constants';  
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://www.joaoblumel.com/">
-        Enterprise
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import * as Constants from '../Constants';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,6 +42,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const Copyright = () => {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://www.joaoblumel.com/">
+        Enterprise
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 const Signup = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -63,9 +63,22 @@ const Signup = () => {
   const [loadingNow, setLoadingNow] = useState(false);
 
   const onSignClicked = () => {
+    setLoadingNow(true);
     console.log(`email: ${email}`);
     console.log(`password: ${password}`);
     console.log(`confirmPassword: ${confirmPassword}`);
+
+    axios.post(Constants.ENDPOINT_SIGNUP, {
+      database: Constants.DATABASE_USERS,
+      email: email,
+      password: password
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   const loading = () => {
